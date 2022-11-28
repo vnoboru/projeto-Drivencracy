@@ -20,6 +20,15 @@ export async function createPoll(req, res) {
     await pollsColl.insertOne({ title: title, expireAt: expireAt });
     return res.status(201).send("Questionário criado com sucesso! ");
   } catch (err) {
-    res.status(500).send("Não foi possível criar o questionário! ");
+    return res.status(500).send("Não foi possível criar o questionário! ");
+  }
+}
+
+export async function getPoll(req, res) {
+  try {
+    const pollsData = await pollsColl.find().toArray();
+    return res.status(200).send(pollsData);
+  } catch (err) {
+    return res.status(500).send(err);
   }
 }
