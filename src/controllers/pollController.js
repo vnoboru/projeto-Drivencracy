@@ -1,14 +1,13 @@
 import { pollsColl } from "../../index.js";
-import db from "../db.js";
 import dayjs from "dayjs";
 
-export async function createPoll(req, res) {
+export async function postPoll(req, res) {
   const { title, expireAt } = req.body;
 
   try {
     const checkPoll = await pollsColl.findOne({ title });
     if (checkPoll) {
-      return res.status(409).send("Título do questionário da joi cadastrado. ");
+      return res.status(409).send("Título do questionário já foi cadastrado. ");
     }
 
     if (!expireAt) {
