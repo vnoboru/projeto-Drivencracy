@@ -1,6 +1,6 @@
 import choiceSchema from "../schemas/choiceSchema.js";
 
-export function pollValidationMiddleware(req, res, next) {
+export function choiceValidationMiddleware(req, res, next) {
   const { title, pollId } = req.body;
 
   const validation = choiceSchema.validate(

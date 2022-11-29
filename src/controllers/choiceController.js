@@ -7,7 +7,7 @@ export async function postChoice(req, res) {
 
   try {
     const existingPoll = await pollsColl.findOne({ _id: ObjectId(pollId) });
-    console.log(dayjs(existingPoll.expireAt).valueOf());
+
     if (!existingPoll) {
       return res.status(404).send("Não existe a enquete. ");
     }
@@ -22,8 +22,17 @@ export async function postChoice(req, res) {
       return res.status(403).send("Data da enquete está expirada. ");
     }
 
-    /*await choiceColl.insertOne({ title: title, pollId: pollId });
-    return res.status(201).send("Opção de voto criada com sucesso. ");*/
+    await choiceColl.insertOne({ title: title, pollId: pollId });
+    return res.status(201).send("Opção de voto criada com sucesso. ");
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+}
+
+export async function getChoice(req, res) {
+  try {
+    const choicesData = await choiceColl.find().toArray();
+    return res.status(200).send(choicesData);
   } catch (err) {
     return res.status(500).send(err);
   }
