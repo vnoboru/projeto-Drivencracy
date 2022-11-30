@@ -5,6 +5,6 @@ import { choiceValidationMiddleware } from "../middlewares/choiceValidationMiddl
 const choiceRouter = Router();
 
 choiceRouter.post("/choice", choiceValidationMiddleware, postChoice);
-choiceRouter.get("/choice", getChoice);
+choiceRouter.get("/poll/:id/choice", getChoice);
 
 export default choiceRouter;

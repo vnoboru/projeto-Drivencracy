@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import db from "./src/db.js";
-import pollRoutes from "./src/routes/pollRoutes.js";
-import choiceRoutes from "./src/routes/choiceRoutes.js";
+import pollRouter from "./src/routes/pollRouter.js";
+import choiceRouter from "./src/routes/choiceRouter.js";
+import voteRouter from "./src/routes/voteRouter.js";
 
 const app = express();
 app.use(express.json());
@@ -10,9 +11,11 @@ app.use(cors());
 
 export const pollsColl = db.collection("poll");
 export const choiceColl = db.collection("choice");
+export const voteColl = db.collection("vote");
 
-app.use(pollRoutes);
-app.use(choiceRoutes);
+app.use(pollRouter);
+app.use(choiceRouter);
+app.use(voteRouter);
 
 const port = 5000;
 
