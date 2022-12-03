@@ -22,7 +22,7 @@ export async function postChoice(req, res) {
       return res.status(403).send("Data da enquete está expirada. ");
     }
 
-    await choiceColl.insertOne({ title: title, pollId: pollId });
+    await choiceColl.insertOne({ title, pollId });
     return res.status(201).send("Opção de voto criada com sucesso. ");
   } catch (err) {
     return res.status(500).send(err);

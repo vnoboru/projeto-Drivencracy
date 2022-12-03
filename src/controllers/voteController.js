@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 export async function postVote(req, res) {
   const id = req.params.id;
-  const createDate = dayjs().format("YYYY-MM-DD HH:mm");
+  const vote = { createdAt: dayjs().format("YYYY-MM-DD HH:mm"), choiceId: id };
 
   try {
     const optionExist = await choiceColl.findOne({ _id: ObjectId(id) });
@@ -19,14 +19,10 @@ export async function postVote(req, res) {
       return res.status(403).send("Data da enquete está expirada. ");
     }
 
-    const data = await voteColl.insertOne({
-      createdAt: createDate,
-      choiceId: ObjectId(id),
-    });
-    console.log(data);
+    await voteColl.insertOne(vote);
     return res.status(201).send("Voto enviado com sucesso! ");
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     return res.status(500).send("Não foi possível fazer o voto. ");
   }
 }
